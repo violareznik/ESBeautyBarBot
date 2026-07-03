@@ -125,7 +125,13 @@ class Booking(StatesGroup):
 
 
 def pic(filename: str) -> FSInputFile:
-    return FSInputFile(MEDIA_DIR / filename)
+    path = MEDIA_DIR / filename
+
+    if path.exists():
+        return FSInputFile(path)
+
+    # Если папки media нет, берем файл из корня репозитория
+    return FSInputFile(BASE_DIR / filename)
 
 
 def kb_main():
